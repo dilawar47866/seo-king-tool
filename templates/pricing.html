@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1 class="text-center mb-5">💎 Pricing Plans</h1>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body d-flex flex-column">
+                    <h3 class="mb-3">Free</h3>
+                    <h2 class="mb-3">$0<small class="text-muted">/mo</small></h2>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2">✅ 50 AI requests/month</li>
+                        <li class="mb-2">✅ Basic SEO tools</li>
+                        <li class="mb-2">✅ Content editor</li>
+                        <li class="mb-2">✅ Manual SEO controls</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-outline-primary mt-auto">Get Started</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center border-primary shadow">
+                <div class="card-header bg-primary text-white">
+                    <strong>MOST POPULAR</strong>
+                </div>
+                <div class="card-body d-flex flex-column">
+                    <h3 class="mb-3">Pro</h3>
+                    <h2 class="mb-3">$29<small class="text-muted">/mo</small></h2>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2">✅ 500 AI requests/month</li>
+                        <li class="mb-2">✅ All SEO tools</li>
+                        <li class="mb-2">✅ Bulk content writer</li>
+                        <li class="mb-2">✅ Keyword research</li>
+                        <li class="mb-2">✅ Priority support</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-primary mt-auto">Upgrade to Pro</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-body d-flex flex-column">
+                    <h3 class="mb-3">Enterprise</h3>
+                    <h2 class="mb-3">$99<small class="text-muted">/mo</small></h2>
+                    <ul class="list-unstyled mb-4 flex-grow-1">
+                        <li class="mb-2">✅ Unlimited AI requests</li>
+                        <li class="mb-2">✅ All Pro features</li>
+                        <li class="mb-2">✅ API access</li>
+                        <li class="mb-2">✅ White-label option</li>
+                        <li class="mb-2">✅ Dedicated support</li>
+                    </ul>
+                    <a href="/signup" class="btn btn-outline-primary mt-auto">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

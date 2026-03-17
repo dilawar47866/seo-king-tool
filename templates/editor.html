@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h1 class="mb-4">✍️ Content Editor</h1>
+    
+    <div class="card mb-4">
+        <div class="card-body">
+            <h5 class="card-title">🤖 Generate Content</h5>
+            <div class="mb-3">
+                <label class="form-label">Target Keyword</label>
+                <input type="text" class="form-control" id="keyword" placeholder="e.g., best running shoes 2024">
+            </div>
+            <button onclick="generateContent()" class="btn btn-primary" id="generateBtn">
+                Generate Content with AI
+            </button>
+        </div>
+    </div>
+    
+    <div id="contentArea" class="d-none">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Generated Content</h5>
+                <div id="contentPreview" class="border p-3 mb-3" style="max-height: 500px; overflow-y: auto;"></div>
+                <div class="d-flex gap-2">
+                    <button onclick="saveContent()" class="btn btn-success">💾 Save Content</button>
+                    <button onclick="copyContent()" class="btn btn-outline-primary">📋 Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+let generatedContent = null;
+
+async function generateContent() {
+    const keyword = document.getElementById('keyword').value.trim();
+    if (!keyword) {
+        alert('Please enter a keyword');
+        return;
+    }
+    
+    const btn = document.getElementById('generateBtn');
+    btn.disabled = true;
+    btn.textContent = 'Generating... (this may take 10-30 seconds)';
+    
+    try {
+        const response = await fetch('/api/generate-content', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({keyword: keyword})
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            generatedContent = result;
+            document.getElementById('contentPreview').innerHTML = result.html_content;
+            document.getElementById('contentArea').classList.remove('d-none');
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    } finally {
+        btn.disabled = false;
+        btn.textContent = 'Generate Content with AI';
+    }
+}
+
+async function saveContent() {
+    if (!generatedContent) {
+        alert('No content to save');
+        return;
+    }
+    
+    const keyword = document.getElementById('keyword').value;
+    const data = {
+        title: keyword,
+        keyword: keyword,
+        content: generatedContent.content,
+        html_content: generatedContent.html_content
+    };
+    
+    try {
+        const response = await fetch('/api/save-content', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify(data)
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert('✅ Content saved successfully!');
+            window.location.href = '/dashboard';
+        } else {
+            alert('Error: ' + result.error);
+        }
+    } catch (error) {
+        alert('Error: ' + error.message);
+    }
+}
+
+function copyContent() {
+    if (!generatedContent) return;
+    navigator.clipboard.writeText(generatedContent.content);
+    alert('✅ Content copied to clipboard!');
+}
+</script>
+{% endblock %}
